@@ -211,11 +211,7 @@ const CachedImage = React.createClass({
                 </View>
               );
             }
-            return (
-                <ActivityIndicator
-                    {...activityIndicatorProps}
-                    style={[imageStyle, activityIndicatorStyle]}/>
-            );
+            return null;
         }
         // otherwise render an image with the defaultSource with the ActivityIndicator on top of it
         return this.props.renderImageBackground({
@@ -228,9 +224,7 @@ const CachedImage = React.createClass({
                   ? <View style={[imageStyle, activityIndicatorStyle]}>
                       <LoadingIndicator {...activityIndicatorProps} />
                     </View>
-                  : <ActivityIndicator
-                      {...activityIndicatorProps}
-                      style={activityIndicatorStyle}/>
+                  : null
             )
         });
     },
