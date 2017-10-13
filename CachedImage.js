@@ -57,7 +57,7 @@ const CachedImage = React.createClass({
     getDefaultProps(){
         return {
             renderImage: props => {
-                return (<Image ref={CACHED_IMAGE_REF} {...props}/>)
+                return (<Image ref={ ref => this.refs = ref } {...props}/>)
             },
             renderImageBackground: props => {
                 let Img = (ImageBackground || Image);
@@ -71,7 +71,7 @@ const CachedImage = React.createClass({
 
     setNativeProps(nativeProps) {
         try {
-            this.refs[CACHED_IMAGE_REF].setNativeProps(nativeProps);
+            this.refs.setNativeProps(nativeProps);
         } catch (e) {
             console.error(e);
         }
@@ -206,7 +206,7 @@ const CachedImage = React.createClass({
         if (!source || (Platform.OS === 'android' && flattenStyle(imageStyle).borderRadius)) {
             if (LoadingIndicator) {
               return (
-                <View style={[imageStyle, activityIndicatorStyle]}>
+                <View style={[activityIndicatorStyle]}>
                   <LoadingIndicator {...activityIndicatorProps} />
                 </View>
               );
@@ -221,7 +221,7 @@ const CachedImage = React.createClass({
             source,
             children: (
                 LoadingIndicator
-                  ? <View style={[imageStyle, activityIndicatorStyle]}>
+                  ? <View style={[activityIndicatorStyle]}>
                       <LoadingIndicator {...activityIndicatorProps} />
                     </View>
                   : null
@@ -233,7 +233,7 @@ const CachedImage = React.createClass({
         const imageStyle = [this.props.style, styles.loaderPlaceholder];
         const activityIndicatorStyle = this.props.activityIndicatorProps.style || styles.loader;
         return (
-            <View style={[imageStyle, activityIndicatorStyle]}>
+            <View style={[activityIndicatorStyle]}>
                 <Text>{err.code} {err.message}</Text>
             </View>
         );
