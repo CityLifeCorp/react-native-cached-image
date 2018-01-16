@@ -5,6 +5,7 @@ const React = require('react');
 const ReactNative = require('react-native');
 const flattenStyle = ReactNative.StyleSheet.flatten;
 const ImageCacheProvider = require('./ImageCacheProvider');
+const PropTypes = require('prop-types');
 
 const {
     View,
@@ -42,32 +43,6 @@ function getImageProps(props) {
 const CACHED_IMAGE_REF = 'cachedImage';
 
 const CachedImage = React.createClass({
-    propTypes: {
-        renderImage: React.PropTypes.func,
-        renderLoader: React.PropTypes.func,
-        renderError: React.PropTypes.func,
-        activityIndicatorProps: React.PropTypes.object.isRequired,
-        useQueryParamsInCacheKey: React.PropTypes.oneOfType([
-            React.PropTypes.bool,
-            React.PropTypes.array
-        ]).isRequired,
-        cacheLocation: React.PropTypes.string
-    },
-
-    getDefaultProps(){
-        return {
-            renderImage: props => {
-                return (<Image ref={ ref => this.refs = ref } {...props}/>)
-            },
-            renderImageBackground: props => {
-                let Img = (ImageBackground || Image);
-                return (<Img {...props}/>);
-            },
-            activityIndicatorProps: {},
-            useQueryParamsInCacheKey: false,
-            cacheLocation: ImageCacheProvider.LOCATION.CACHE
-        }
-    },
 
     setNativeProps(nativeProps) {
         try {
@@ -240,6 +215,31 @@ const CachedImage = React.createClass({
     },
 
 });
+
+CachedImage.propTypes = {
+    renderImage: PropTypes.func,
+        renderLoader: PropTypes.func,
+        renderError: PropTypes.func,
+        activityIndicatorProps: PropTypes.object.isRequired,
+        useQueryParamsInCacheKey: PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.array
+    ]).isRequired,
+    cacheLocation: PropTypes.string
+},
+
+CachedImage.defaultProps = {
+    renderImage: props => {
+        return (<Image ref={ ref => this.refs = ref } {...props}/>)
+    },
+    renderImageBackground: props => {
+        let Img = (ImageBackground || Image);
+        return (<Img {...props}/>);
+    },
+    activityIndicatorProps: {},
+    useQueryParamsInCacheKey: false,
+    cacheLocation: ImageCacheProvider.LOCATION.CACHE
+};
 
 /**
  * Same as ReactNaive.Image.getSize only it will not download the image if it has a cached version
