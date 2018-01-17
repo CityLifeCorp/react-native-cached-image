@@ -6,6 +6,7 @@ const ReactNative = require('react-native');
 const flattenStyle = ReactNative.StyleSheet.flatten;
 const ImageCacheProvider = require('./ImageCacheProvider');
 const PropTypes = require('prop-types');
+const createReactClass = require('create-react-class');
 
 const {
     View,
@@ -42,7 +43,7 @@ function getImageProps(props) {
 
 const CACHED_IMAGE_REF = 'cachedImage';
 
-const CachedImage = React.createClass({
+const CachedImage = createReactClass({
 
     setNativeProps(nativeProps) {
         try {
